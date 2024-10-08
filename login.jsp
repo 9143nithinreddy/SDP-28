@@ -30,10 +30,11 @@
 						</figure>
 						<a href="registration.jsp" class="signup-image-link">Create an
 							account</a>
+							<a href="adminlogin.jsp" class="signup-image-link">Admin login</a>
 					</div>
 
 					<div class="signin-form">
-						<h2 class="form-title">Sign in</h2>
+						<h2 class="form-title">Sign in User</h2>
 						<form method="post" action="login" class="register-form"
 							id="login-form">
 							<div class="form-group">
