@@ -1,5 +1,3 @@
-<%@ page import="java.sql.*" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,12 +152,11 @@
     </header>
     <nav class="navbar">
         <ul>
-            <li><a href="userhome.jsp">&nbsp;&nbsp;&nbsp;&nbsp;Dashboard&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;All Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;All Documents&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="mybooks.jsp">&nbsp;&nbsp;&nbsp;&nbsp;My Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;My Documents&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;Profile&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            <li><a href="userhome.html">&nbsp;&nbsp;&nbsp;&nbsp;Dashboard&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            <li><a href="userlistbook.html">&nbsp;&nbsp;&nbsp;&nbsp;All Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            
+            <li><a href="mybooks.html">&nbsp;&nbsp;&nbsp;&nbsp;My Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+           
         </ul>
     </nav>
     
@@ -172,37 +169,7 @@
 <body>
     <h2>List of Books</h2>
     <div class="grid-container">
-        <%
-            String dbURL = "jdbc:mysql://localhost:3306/jfsd-ps46";
-            String dbUser = "root";
-            String dbPassword = "12345";
-
-            try (Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
-                String sql = "SELECT * FROM books";
-                Statement statement = conn.createStatement();
-                ResultSet resultSet = statement.executeQuery(sql);
-
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    String author = resultSet.getString("author");
-                    String category = resultSet.getString("category");
-                    String price = resultSet.getString("price");
-                    String description = resultSet.getString("description");
-                    Blob imageBlob = resultSet.getBlob("image");
-                    byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
-                    String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
-        %>
-        <div class="book-card" onclick="location.href='bookContent.jsp?id=<%= id %>'">
-            <img src="data:image/jpeg;base64,<%= base64Image %>" alt="Book Image">
-        
-        </div>
-        <%
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        %>
+       
     </div>
 
     <div class="container">
