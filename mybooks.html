@@ -1,8 +1,3 @@
-<%@ page import="java.sql.*" %>
-<%@ page isErrorPage="false" %>
-<%@ page errorPage="error.jsp" %>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,12 +139,9 @@
     </header>
     <nav class="navbar">
         <ul>
-            <li><a href="userhome.jsp">&nbsp;&nbsp;&nbsp;&nbsp;Dashboard&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="userlistbook.jsp">&nbsp;&nbsp;&nbsp;&nbsp;All Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;All Documents&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="mybooks.jsp">&nbsp;&nbsp;&nbsp;&nbsp;My Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;My Documents&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-            <li><a href="">&nbsp;&nbsp;&nbsp;&nbsp;Profile&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            <li><a href="userhome.html">&nbsp;&nbsp;&nbsp;&nbsp;Dashboard&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            <li><a href="userlistbook.html">&nbsp;&nbsp;&nbsp;&nbsp;All Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            <li><a href="mybooks.html">&nbsp;&nbsp;&nbsp;&nbsp;My Books&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
         </ul>
     </nav>
     
@@ -160,43 +152,6 @@
 <body>
     <h2>My Borrowed Books</h2>
     <div class="grid-container">
-        <%
-            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jfsd-ps46", "root", "12345")) {
-                String sql = "SELECT b.id, b.name, b.author, b.category, b.price, b.description, b.image " +
-                             "FROM books b JOIN user_books ub ON b.id = ub.book_id WHERE ub.return_status = FALSE";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-
-                ResultSet resultSet = stmt.executeQuery();
-
-                if (!resultSet.isBeforeFirst()) {
-                    out.println("<p>No books borrowed.</p>");
-                }
-
-                while (resultSet.next()) {
-                    int bookId = resultSet.getInt("id");
-                    String name = resultSet.getString("name");
-                    String author = resultSet.getString("author");
-                    String category = resultSet.getString("category");
-                    String price = resultSet.getString("price");
-                    String description = resultSet.getString("description");
-                    Blob imageBlob = resultSet.getBlob("image");
-                    byte[] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
-                    String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
-        %>
-        <div class="book-card" onclick="location.href='bookContent.jsp?id=<%= bookId %>'">
-            <img src="data:image/jpeg;base64,<%= base64Image %>" alt="Book Image">
-            <h3><%= name %></h3>
-            <p><strong>Author:</strong> <%= author %></p>
-            <p><strong>Category:</strong> <%= category %></p>
-            <p><strong>Price:</strong> $<%= price %></p>
-            <a href="ReturnBookServlet?id=<%= bookId %>" class="btn-return">Return</a>
-        </div>
-        <%
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        %>
     </div>
 </body>
 </html>
